@@ -1,127 +1,220 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Cyber Simulator - PERFECT</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Cyber Awareness Simulator v2.0</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<div class="matrix"></div>
-<header>
-<h1>🔥 CYBER ATTACK SIMULATOR</h1>
-<nav>
-<button data-page="home" class="nav-btn active">🏠 HOME</button>
-<button data-page="attack" class="nav-btn">⚔️ ATTACKS</button>
-<button data-page="quiz" class="nav-btn">🎯 QUIZ</button>
-</nav>
-</header>
+  <div class="scan-overlay"></div>
 
-<main>
-<!-- HOME -->
-<div id="home" class="page active">
-<h2>Live Attack Simulations</h2>
-<div class="grid">
-<div class="card" data-attack="malware">🦠 MALWARE<br><small>Keylogger injection</small></div>
-<div class="card" data-attack="ransom">💀 RANSOMWARE<br><small>File encryption</small></div>
-<div class="card" data-attack="phish">📧 PHISHING<br><small>Credential theft</small></div>
-<div class="card" data-attack="web">🌐 WEB BREACH<br><small>SQL injection</small></div>
-<div class="card" data-attack="ddos">🌪️ DDOS<br><small>Traffic flood</small></div>
-</div>
-</div>
+  <header>
+    <div class="branding">
+      <span class="logo-dot"></span>
+      <h1>Cyber Awareness Simulator</h1>
+    </div>
+    <p class="subtitle">Real attacks · Live demos · Prevention training</p>
+  </header>
 
-<!-- MALWARE -->
-<div id="malware" class="page attack-page">
-<button class="back">← BACK</button>
-<div class="demo">
-<button id="runMalware">▶️ RUN ATTACK</button>
-<div id="malwareLog" class="log"></div>
-</div>
-<div class="tips">
-<h3>🛡️ PREVENTION</h3>
-<ul id="malwareTips">
-<li>Real-time antivirus</li>
-<li>Standard user accounts</li>
-<li>Block Downloads folder</li>
-</ul>
-</div>
-</div>
+  <nav>
+    <button class="nav-btn active" data-target="home">🏠 Home</button>
+    <button class="nav-btn" data-target="attack">⚔️ Attack Lab</button>
+    <button class="nav-btn" data-target="puzzle">🎯 Quiz</button>
+  </nav>
 
-<!-- RANSOMWARE -->
-<div id="ransom" class="page attack-page">
-<button class="back">← BACK</button>
-<div class="demo">
-<button id="runRansom">▶️ ENCRYPT FILES</button>
-<div id="ransomLog" class="log"></div>
-</div>
-<div class="tips">
-<h3>🛡️ PREVENTION</h3>
-<ul><li>3-2-1 backups</li><li>Immutable storage</li><li>Network segmentation</li></ul>
-</div>
-</div>
+  <main>
+    <!-- HOME -->
+    <section id="home" class="page active">
+      <h2>Master Cyber Defense</h2>
+      <p class="lead">8+ real attack simulations with explanations & prevention guides</p>
+      <div class="cards">
+        <div class="card">
+          <h3>🦠 Malware</h3><p>Live infection + EDR response demo</p>
+        </div>
+        <div class="card">
+          <h3>💀 Ransomware</h3><p>File encryption + recovery simulation</p>
+        </div>
+        <div class="card">
+          <h3>📧 Phishing</h3><p>Email analysis + credential theft</p>
+        </div>
+        <div class="card">
+          <h3>🌐 Web Breach</h3><p>Nmap → SQLi → data dump</p>
+        </div>
+      </div>
+    </section>
 
-<!-- PHISHING -->
-<div id="phish" class="page attack-page">
-<button class="back">← BACK</button>
-<div class="demo">
-<button id="runPhish">▶️ SEND PHISH</button>
-<div id="phishLog" class="log"></div>
-</div>
-<div class="tips">
-<h3>🛡️ PREVENTION</h3>
-<ul><li>Check URLs before clicking</li><li>Use bookmarks</li><li>Enable MFA</li></ul>
-</div>
-</div>
+    <!-- ATTACK SELECTION -->
+    <section id="attack" class="page">
+      <h2>Attack Lab</h2>
+      <p class="lead">Click any attack to run live simulation + see prevention</p>
+      <div class="attack-grid">
+        <div class="attack-card" data-attack="malware">
+          <div class="attack-icon">🦠</div><h3>Malware</h3><p>Keylogger injection</p><span class="severity medium">Medium</span>
+        </div>
+        <div class="attack-card" data-attack="ransomware">
+          <div class="attack-icon">💀</div><h3>Ransomware</h3><p>File encryption</p><span class="severity high">High</span>
+        </div>
+        <div class="attack-card" data-attack="phishing">
+          <div class="attack-icon">📧</div><h3>Phishing</h3><p>Credential theft</p><span class="severity medium">Medium</span>
+        </div>
+        <div class="attack-card" data-attack="web">
+          <div class="attack-icon">🌐</div><h3>Web App Breach</h3><p>SQL injection</p><span class="severity high">High</span>
+        </div>
+        <div class="attack-card" data-attack="ddos">
+          <div class="attack-icon">🌪️</div><h3>DDoS</h3><p>Traffic flood</p><span class="severity high">High</span>
+        </div>
+      </div>
+    </section>
 
-<!-- WEB ATTACK -->
-<div id="web" class="page attack-page">
-<button class="back">← BACK</button>
-<div class="demo">
-<button id="runWeb">▶️ HACK WEBSITE</button>
-<div id="webLog" class="log"></div>
-</div>
-<div class="tips">
-<h3>🛡️ PREVENTION</h3>
-<ul><li>SQL prepared statements</li><li>Web Application Firewall</li><li>Regular VAPT</li></ul>
-</div>
-</div>
+    <!-- MALWARE PAGE -->
+    <section id="malware" class="page detail-page">
+      <button class="back-btn" data-target="attack">← Back</button>
+      <div class="detail-content">
+        <h2>🦠 Malware Attack Simulation</h2>
+        <div class="simulation-controls">
+          <button id="runMalware" class="primary">▶️ Run Attack</button>
+          <button id="stopMalware" class="danger">🛑 Stop Attack</button>
+        </div>
+        <div class="detail-panels">
+          <div class="panel terminal-panel">
+            <h3>System Console</h3>
+            <div id="malwareLog" class="terminal"></div>
+          </div>
+          <div class="panel">
+            <h3>Prevention Steps</h3>
+            <div id="malwarePrevent"></div>
+          </div>
+        </div>
+        <div class="learn-section">
+          <h3>📚 Learn Videos</h3>
+          <div class="video-links">
+            <a href="https://www.youtube.com/watch?v=O36wWU4TfrI" target="_blank" class="video-link">
+              🎥 Ransomware Simulation Demo (Real Attack)
+            </a>
+            <a href="https://www.youtube.com/watch?v=VEVZmXOv2cc" target="_blank" class="video-link">
+              🎥 Sophos EDR Stops Malware
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<!-- DDOS - FULL PAGE -->
-<div id="ddos" class="page attack-page">
-<button class="back">← BACK</button>
-<div class="demo">
-<button id="runDDoS">🌪️ LAUNCH DDOS</button>
-<div id="ddosLog" class="log"></div>
-<div class="traffic-meter">
-<span id="traffic">0 Mbps</span>
-<div class="meter"><div id="meterFill"></div></div>
-</div>
-</div>
-<div class="tips">
-<h3>🛡️ DDOS PROTECTION</h3>
-<ul>
-<li>Cloudflare / Akamai CDN</li>
-<li>Rate limiting</li>
-<li>Anycast network</li>
-<li>Traffic scrubbing</li>
-<li>BGP blackholing
-</li>
-</ul>
-</div>
-</div>
+    <!-- RANSOMWARE PAGE -->
+    <section id="ransomware" class="page detail-page">
+      <button class="back-btn" data-target="attack">← Back</button>
+      <div class="detail-content">
+        <h2>💀 Ransomware Simulation</h2>
+        <div class="simulation-controls">
+          <button id="runRansom" class="primary">▶️ Encrypt Files</button>
+          <button id="recoverRansom" class="secondary">🔄 Recover</button>
+        </div>
+        <div class="detail-panels">
+          <div class="panel terminal-panel">
+            <h3>System Console</h3>
+            <div id="ransomLog" class="terminal"></div>
+          </div>
+          <div class="panel">
+            <h3>Prevention Steps</h3>
+            <div id="ransomPrevent"></div>
+          </div>
+        </div>
+        <div class="learn-section">
+          <h3>📚 Learn Videos</h3>
+          <div class="video-links">
+            <a href="https://www.youtube.com/watch?v=O36wWU4TfrI" target="_blank" class="video-link">
+              🎥 Full Ransomware Attack Demo
+            </a>
+            <a href="https://www.youtube.com/watch?v=VEVZmXOv2cc" target="_blank" class="video-link">
+              🎥 CryptoGuard Defense Demo
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<!-- QUIZ -->
-<div id="quiz" class="page">
-<h2>🔥 SECURITY QUIZ</h2>
-<div class="quiz">
-<div class="question">SMS: "Update KYC" link?</div>
-<button class="qbtn">Click it</button>
-<button class="qbtn correct">Call bank</button>
-<button class="qbtn">Reply SMS</button>
-<div>Score: <span id="quizScore">0</span></div>
-</div>
-</div>
-</main>
+    <!-- PHISHING PAGE -->
+    <section id="phishing" class="page detail-page">
+      <button class="back-btn" data-target="attack">← Back</button>
+      <div class="detail-content">
+        <h2>📧 Phishing Attack</h2>
+        <div class="simulation-controls">
+          <button id="runPhish" class="primary">▶️ Send Phishing Email</button>
+        </div>
+        <div class="detail-panels">
+          <div class="panel terminal-panel">
+            <h3>Attack Console</h3>
+            <div id="phishLog" class="terminal"></div>
+          </div>
+          <div class="panel">
+            <h3>Safe Practices</h3>
+            <div id="phishPrevent"></div>
+          </div>
+        </div>
+        <div class="learn-section">
+          <h3>📚 Learn Videos</h3>
+          <div class="video-links">
+            <a href="https://www.youtube.com/watch?v=HhGE9o3Jn10" target="_blank" class="video-link">
+              🎥 All Cyber Attacks Explained
+            </a>
+            <a href="https://www.youtube.com/watch?v=6mQ1L6YX9pY" target="_blank" class="video-link">
+              🎥 Phishing Attack Types
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<script src="script.js"></script>
+    <!-- WEB BREACH PAGE -->
+    <section id="web" class="page detail-page">
+      <button class="back-btn" data-target="attack">← Back</button>
+      <div class="detail-content">
+        <h2>🌐 Web App Breach</h2>
+        <div class="simulation-controls">
+          <button id="runWeb" class="primary">▶️ Run Full Attack Chain</button>
+        </div>
+        <div class="detail-panels">
+          <div class="panel terminal-panel">
+            <h3>Hacker Terminal</h3>
+            <div id="webLog" class="terminal"></div>
+          </div>
+          <div class="panel">
+            <h3>VAPT Checklist</h3>
+            <div id="webPrevent"></div>
+          </div>
+        </div>
+        <div class="learn-section">
+          <h3>📚 Learn Videos</h3>
+          <div class="video-links">
+            <a href="https://www.youtube.com/watch?v=HhGE9o3Jn10" target="_blank" class="video-link">
+              🎥 SQL Injection Demo
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="puzzle" class="page">
+      <h2>Quiz Arena</h2>
+      <div class="quiz-wrapper">
+        <div class="quiz-meta">
+          <span id="timer">30s</span><span id="score">0</span><span id="streak">0</span>
+        </div>
+        <div class="quiz-card">
+          <h3 id="question">Loading...</h3>
+          <div class="options">
+            <button id="optA" class="option"></button>
+            <button id="optB" class="option"></button>
+            <button id="optC" class="option"></button>
+          </div>
+          <p id="feedback"></p>
+          <button id="nextQ" class="ghost" disabled>Next</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
