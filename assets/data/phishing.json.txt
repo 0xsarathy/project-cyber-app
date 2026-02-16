@@ -1,0 +1,8 @@
+{
+  "indicators": [
+    "URL mismatch",
+    "Urgent language",
+    "Fake domain",
+    "Login request"
+  ]
+}
