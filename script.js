@@ -1,171 +1,158 @@
-// GLOBAL NAVIGATION
-document.querySelectorAll('.nav-btn, .back-btn').forEach(btn => {
-  btn.onclick = () => {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    const target = document.getElementById(btn.dataset.target);
-    if (target) target.classList.add('active');
+// GLOBAL VARIABLES
+let attackRunning = false;
+
+// NAVIGATION
+document.querySelectorAll('.navbtn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.page').forEach(page => {
+      page.classList.remove('active');
+    });
+    document.querySelector(`#${this.dataset.page}`).classList.add('active');
     
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    if (btn.dataset.target === 'home') document.querySelector('[data-target="home"]').classList.add('active');
-  };
-});
-
-// ATTACK CARD NAVIGATION
-document.querySelectorAll('.attack-card').forEach(card => {
-  card.onclick = (e) => {
-    if (e.target.closest('.back-btn')) return;
-    const attack = card.dataset.attack;
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(attack).classList.add('active');
-  };
-});
-
-// TERMINAL HELPER
-function logToTerminal(logEl, text) {
-  const line = document.createElement('div');
-  line.className = 'terminal-line';
-  line.textContent = `[${new Date().toLocaleTimeString()}] ${text}`;
-  logEl.appendChild(line);
-  logEl.scrollTop = logEl.scrollHeight;
-  setTimeout(() => line.style.opacity = '1', 100);
-}
-
-// ========== MALWARE SIMULATION ==========
-document.getElementById('runMalware').onclick = () => {
-  const log = document.getElementById('malwareLog');
-  const prevent = document.getElementById('malwarePrevent');
-  log.innerHTML = '';
-  
-  logToTerminal(log, 'User downloaded: invoice_urgent.exe');
-  setTimeout(() => logToTerminal(log, 'AV signature check: PASSED (zero-day)'), 800);
-  setTimeout(() => logToTerminal(log, 'Process injected into chrome.exe'), 1600);
-  setTimeout(() => logToTerminal(log, 'Keylogger active - capturing keystrokes'), 2400);
-  setTimeout(() => logToTerminal(log, 'Persistence: Task Scheduler entry created'), 3200);
-  
-  setTimeout(() => {
-    prevent.innerHTML = `
-      <ul>
-        <li>✅ Real-time EDR with behavioral analysis</li>
-        <li>✅ Application allow-listing (AppLocker)</li>
-        <li>✅ Least privilege - standard user accounts</li>
-        <li>✅ Block execution from Downloads/Temp</li>
-        <li>✅ Regular patch management automation</li>
-      </ul>
-    `;
-  }, 3500);
-};
-
-document.getElementById('stopMalware').onclick = () => {
-  const log = document.getElementById('malwareLog');
-  logToTerminal(log, '🛡️ EDR DETECTED: Behavioral anomaly');
-  logToTerminal(log, '🛡️ Process terminated + quarantined');
-  logToTerminal(log, '🛡️ Persistence removed');
-};
-
-// ========== RANSOMWARE SIMULATION ==========
-document.getElementById('runRansom').onclick = () => {
-  const log = document.getElementById('ransomLog');
-  const prevent = document.getElementById('ransomPrevent');
-  log.innerHTML = '';
-  
-  logToTerminal(log, 'User opened: INVOICE.pdf.exe');
-  setTimeout(() => logToTerminal(log, 'Ransomware activated - encrypting Desktop/'), 1000);
-  setTimeout(() => logToTerminal(log, 'Encrypting Documents/ - 45% complete'), 2000);
-  setTimeout(() => logToTerminal(log, 'Shadow copies deleted - no restore points'), 3000);
-  setTimeout(() => logToTerminal(log, 'ENCRYPTION COMPLETE - README.txt dropped'), 4000);
-  
-  setTimeout(() => {
-    prevent.innerHTML = `
-      <ul>
-        <li>✅ 3-2-1 Backup Rule (3 copies, 2 media, 1 offsite)</li>
-        <li>✅ Immutable backups (cannot be encrypted)</li>
-        <li>✅ Network segmentation</li>
-        <li>✅ Block Office macros from internet</li>
-      </ul>
-    `;
-  }, 4200);
-};
-
-document.getElementById('recoverRansom').onclick = () => {
-  const log = document.getElementById('ransomLog');
-  logToTerminal(log, '🔄 Recovery: Mounting immutable backup');
-  logToTerminal(log, '🔄 Files restored from offline copy');
-  logToTerminal(log, '✅ System clean - lesson learned');
-};
-
-// ========== PHISHING SIMULATION ==========
-document.getElementById('runPhish').onclick = () => {
-  const log = document.getElementById('phishLog');
-  const prevent = document.getElementById('phishPrevent');
-  log.innerHTML = '';
-  
-  logToTerminal(log, 'Phishing email sent: URGENT KYC Update');
-  setTimeout(() => logToTerminal(log, 'User clicked: paytm-login.net'), 800);
-  setTimeout(() => logToTerminal(log, 'Fake login page loaded'), 1600);
-  setTimeout(() => logToTerminal(log, 'Credentials captured: user@gmail.com / pass123'), 2400);
-  setTimeout(() => logToTerminal(log, 'Session cookie stolen'), 3200);
-  
-  setTimeout(() => {
-    prevent.innerHTML = `
-      <ul>
-        <li>✅ Check URL carefully (hover before click)</li>
-        <li>✅ Use bookmarks/official apps</li>
-        <li>✅ Enable MFA everywhere</li>
-        <li>✅ Email headers analysis training</li>
-      </ul>
-    `;
-  }, 3500);
-};
-
-// ========== WEB ATTACK ==========
-document.getElementById('runWeb').onclick = () => {
-  const log = document.getElementById('webLog');
-  const prevent = document.getElementById('webPrevent');
-  log.innerHTML = '';
-  
-  logToTerminal(log, 'nmap -sV target-app.com');
-  setTimeout(() => logToTerminal(log, '80/tcp open nginx/1.18.0 (outdated)'), 800);
-  setTimeout(() => logToTerminal(log, 'POST /login SQL injection detected'), 1600);
-  setTimeout(() => logToTerminal(log, "' OR 1=1 -- dumped users table"), 2400);
-  setTimeout(() => logToTerminal(log, '1000+ emails + hashes exfiltrated'), 3200);
-  
-  setTimeout(() => {
-    prevent.innerHTML = `
-      <ul>
-        <li>✅ Parameterized queries/ORM</li>
-        <li>✅ Web Application Firewall (WAF)</li>
-        <li>✅ Regular VAPT testing</li>
-        <li>✅ Patch nginx immediately</li>
-      </ul>
-    `;
-  }, 3500);
-};
-
-// ========== QUIZ (SIMPLE VERSION) ==========
-let score = 0, current = 0, timeLeft = 30;
-const questions = [
-  { q: "SMS: Update KYC link?", options: ["Click", "Call bank", "Reply"], correct: 1 },
-  { q: "Colleague wants password?", options: ["Share", "IT support", "Login for them"], correct: 1 }
-];
-
-function loadQuiz() {
-  const q = questions[current];
-  document.getElementById('question').textContent = q.q;
-  document.querySelectorAll('.option').forEach((btn, i) => {
-    btn.textContent = q.options[i];
-    btn.onclick = () => {
-      if (i === q.correct) score += 10;
-      document.getElementById('score').textContent = score;
-      document.getElementById('nextQ').disabled = false;
-    };
+    document.querySelectorAll('.navbtn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
   });
+});
+
+// ATTACK FUNCTIONS
+function launchAttack(type) {
+  if (attackRunning) return;
+  attackRunning = true;
+  
+  // VISUAL FEEDBACK
+  document.getElementById('traffic-arrow').style.color = '#f88';
+  document.getElementById('packets').style.display = 'block';
+  
+  // UPDATE STATS
+  document.getElementById('atk-cpu').textContent = '89%';
+  document.getElementById('vic-cpu').textContent = '97%';
+  document.getElementById('atk-net').textContent = '2.1 MB/s';
+  document.getElementById('vic-net').textContent = '1.8 MB/s';
+  
+  // ATTACKER LOG START
+  logAttacker(`🚀 LAUNCHING ${type.toUpperCase()} ATTACK...`);
+  
+  // ATTACK SIMULATION
+  setTimeout(() => {
+    switch(type) {
+      case 'nmap':
+        logAttacker('nmap -sS -T4 -p- 192.168.1.200');
+        logAttacker('PORT     STATE  SERVICE');
+        logAttacker('22/tcp   open   ssh');
+        logAttacker('80/tcp   open   http');
+        logAttacker('445/tcp  open   smb');
+        logVictim('🔴 IDS ALERT: Port scan detected from 192.168.1.100');
+        break;
+        
+      case 'phish':
+        logAttacker('python phishing_server.py --target 192.168.1.200');
+        logAttacker('📧 Spear phishing: "URGENT KYC UPDATE"');
+        logAttacker('✅ Victim clicked → Credentials captured!');
+        logVictim('⚠️ Suspicious URL opened: fake-paytm-login.com');
+        logVictim('💀 USER: admin | PASS: P@ssw0rd123 STOLEN');
+        break;
+        
+      case 'exploit':
+        logAttacker('msfconsole -x "use exploit/windows/smb/ms17_010"');
+        logAttacker('💉 EternalBlue → Sending payload...');
+        logAttacker('🎯 Exploit SUCCESS → SYSTEM shell gained!');
+        logVictim('⚠️ svchost.exe → High CPU + Suspicious network');
+        logVictim('💀 Privilege escalation to SYSTEM detected');
+        break;
+        
+      case 'ransom':
+        logAttacker('dropping encryptor.exe payload');
+        logAttacker('🔒 Encrypting Desktop/ → 45% complete');
+        logAttacker('✅ Encryption 100% → README.txt ransom note');
+        logVictim('⚠️ High disk I/O → encryptor.exe detected');
+        logVictim('💀 CRITICAL: All files .encrypted');
+        break;
+        
+      case 'ddos':
+        logAttacker('hping3 --flood -S -p80 192.168.1.200');
+        logAttacker('🌪️ DDoS → 3.2Gbps SYN flood active');
+        logAttacker('📊 Traffic: 95% packet loss achieved');
+        logVictim('💀 NETWORK SATURATED → 98% packet drop');
+        logVictim('💀 WEBSERVER DOWN → Connection timeout');
+        document.getElementById('vic-cpu').textContent = '100%';
+        break;
+    }
+  }, 1200);
+  
+  // RESET AFTER 7 SECONDS
+  setTimeout(() => {
+    attackRunning = false;
+    document.getElementById('traffic-arrow').style.color = '#0f0';
+    document.getElementById('packets').style.display = 'none';
+    document.getElementById('atk-cpu').textContent = '12%';
+    document.getElementById('vic-cpu').textContent = '6%';
+    document.getElementById('atk-net').textContent = '0 KB/s';
+    document.getElementById('vic-net').textContent = '0 KB/s';
+  }, 7000);
 }
 
-document.getElementById('nextQ').onclick = () => {
-  current++;
-  if (current < questions.length) loadQuiz();
-  else alert('Quiz Complete! Score: ' + score);
-};
+// LOG FUNCTIONS
+function logAttacker(message) {
+  const log = document.getElementById('attacker-log');
+  const time = new Date().toLocaleTimeString();
+  log.innerHTML += `<div>[${time}] ${message}</div>`;
+  log.scrollTop = log.scrollHeight;
+}
 
-// START
-loadQuiz();
+function logVictim(message) {
+  const log = document.getElementById('victim-log');
+  const time = new Date().toLocaleTimeString();
+  log.innerHTML += `<div>[${time}] ${message}</div>`;
+  log.scrollTop = log.scrollHeight;
+}
+
+// DEFENSE FUNCTIONS
+function defenseAction(type) {
+  switch(type) {
+    case 'block':
+      logAttacker('❌ Connection BLOCKED by firewall');
+      logVictim('✅ Perimeter firewall → 192.168.1.100 BLOCKED');
+      document.getElementById('traffic-arrow').style.color = '#555';
+      document.getElementById('packets').style.display = 'none';
+      break;
+      
+    case 'isolate':
+      logVictim('✅ NAC → Victim PC NETWORK ISOLATED');
+      document.querySelector('.victim .pc-status').textContent = 'ISOLATED';
+      document.querySelector('.victim .pc-status').className = 'pc-status red';
+      break;
+      
+    case 'scan':
+      logVictim('✅ AV SCAN complete → 23 threats QUARANTINED');
+      break;
+      
+    case 'edr':
+      logVictim('✅ EDR activated → Behavioral monitoring ON');
+      break;
+      
+    case 'backup':
+      logVictim('✅ Immutable backup → Files FULLY RESTORED');
+      break;
+  }
+}
+
+// CLEAR LOGS
+function clearLogs(type) {
+  if(type === 'attacker') {
+    document.getElementById('attacker-log').innerHTML = '';
+  } else {
+    document.getElementById('victim-log').innerHTML = '';
+  }
+}
+
+// LIVE CPU UPDATES
+setInterval(() => {
+  const atkCPU = Math.floor(Math.random() * 25 + 8);
+  const vicCPU = Math.floor(Math.random() * 15 + 3);
+  document.getElementById('atk-cpu').textContent = atkCPU + '%';
+  document.getElementById('vic-cpu').textContent = vicCPU + '%';
+}, 3000);
+
+// INITIALIZE
+logAttacker('Cyber Range v3.0 → Attacker:192.168.1.100 | Victim:192.168.1.200');
+logVictim('Windows Server 2019 booted → All services nominal');
