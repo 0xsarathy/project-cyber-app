@@ -2,60 +2,55 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>🔥 CYBER RANGE - LIVE ATTACKS</title>
+<title>🔥 ULTIMATE CYBER RANGE v4.0</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header>
-<h1>🔥 CYBER ATTACK SIMULATOR</h1>
+<h1>🔥 CYBER RANGE v4.0 - LIVE ATTACKS</h1>
 <nav>
-<button class="navbtn active" data-page="dashboard">📊 LIVE DASHBOARD</button>
-<button class="navbtn" data-page="defense">🛡️ BLUE TEAM</button>
+<button class="navbtn active" data-page="dashboard">📊 DASHBOARD</button>
+<button class="navbtn" data-page="quiz">🎯 QUIZ (0/100)</button>
+<button class="navbtn" data-page="prevention">🛡️ PREVENTION</button>
 </nav>
 </header>
 
-<!-- MAIN DASHBOARD -->
+<!-- DASHBOARD -->
 <div id="dashboard" class="page active">
 <div class="container">
-<!-- NETWORK TOPOLOGY -->
+<!-- NETWORK -->
 <div class="network-view">
 <div class="pc attacker">
-<div class="pc-top">🔴 ATTACKER PC</div>
+<div class="pc-top">🔴 ATTACKER</div>
 <div class="pc-ip">192.168.1.100</div>
-<div class="pc-stats">
-CPU: <span id="atk-cpu">10%</span> | Net: <span id="atk-net">0 KB/s</span>
-</div>
+<div>CPU: <span id="atk-cpu">10%</span> | Net: <span id="atk-net">0 KB/s</span></div>
 <div class="pc-status green">READY</div>
 </div>
-
 <div class="network-line">
 <div class="arrow" id="traffic-arrow">➜➜➜</div>
 <div class="packets" id="packets"></div>
 </div>
-
 <div class="pc victim">
-<div class="pc-top">🟢 VICTIM PC</div>
+<div class="pc-top">🟢 VICTIM</div>
 <div class="pc-ip">192.168.1.200</div>
-<div class="pc-stats">
-CPU: <span id="vic-cpu">5%</span> | Net: <span id="vic-net">0 KB/s</span>
-</div>
+<div>CPU: <span id="vic-cpu">5%</span> | Net: <span id="vic-net">0 KB/s</span></div>
 <div class="pc-status green">ONLINE</div>
 </div>
 </div>
 
 <!-- ATTACK CONTROLS -->
 <div class="attack-panel">
-<h3>⚔️ ATTACK CONTROLS</h3>
+<h3>⚔️ LAUNCH ATTACK</h3>
 <div class="attack-buttons">
 <button onclick="launchAttack('nmap')" class="attack-btn">🔍 NMAP SCAN</button>
 <button onclick="launchAttack('phish')" class="attack-btn">📧 PHISHING</button>
-<button onclick="launchAttack('exploit')" class="attack-btn">💉 RCE EXPLOIT</button>
+<button onclick="launchAttack('exploit')" class="attack-btn">💉 RCE</button>
 <button onclick="launchAttack('ransom')" class="attack-btn">💀 RANSOMWARE</button>
 <button onclick="launchAttack('ddos')" class="attack-btn">🌪️ DDOS</button>
 </div>
 </div>
 
-<!-- LIVE LOGS -->
+<!-- LOGS -->
 <div class="logs-container">
 <div class="log-panel">
 <div class="log-header">💀 ATTACKER TERMINAL</div>
@@ -71,27 +66,71 @@ CPU: <span id="vic-cpu">5%</span> | Net: <span id="vic-net">0 KB/s</span>
 </div>
 </div>
 
-<!-- DEFENSE PAGE -->
-<div id="defense" class="page">
-<div class="defense-container">
-<h2>🛡️ BLUE TEAM OPERATIONS</h2>
-<div class="defense-buttons">
-<button onclick="defenseAction('block')" class="def-btn">🚫 BLOCK ATTACKER IP</button>
-<button onclick="defenseAction('isolate')" class="def-btn">🛡️ ISOLATE VICTIM</button>
-<button onclick="defenseAction('scan')" class="def-btn">🔍 FULL AV SCAN</button>
-<button onclick="defenseAction('edr')" class="def-btn">🛡️ ENABLE EDR</button>
-<button onclick="defenseAction('backup')" class="def-btn">🔄 RESTORE BACKUP</button>
+<!-- QUIZ PAGE -->
+<div id="quiz" class="page">
+<div class="quiz-container">
+<h2>🎯 CYBER SECURITY QUIZ</h2>
+<div class="quiz-header">
+<div>Question: <span id="qnum">1</span>/10</div>
+<div>Score: <span id="quiz-score">0</span></div>
+<div>Time: <span id="quiz-time">30</span>s</div>
+</div>
+
+<div class="question-box">
+<h3 id="quiz-question">Loading question...</h3>
+<div class="quiz-options" id="quiz-options"></div>
+<button id="next-question" class="next-btn" disabled>NEXT QUESTION</button>
+<div id="quiz-feedback"></div>
+</div>
+
+<div class="quiz-leaderboard">
+<h4>🏆 TOP SCORES</h4>
+<div>1. CyberNinja - 95</div>
+<div>2. HackMaster - 88</div>
+<div>3. BlueTeam - 82</div>
 </div>
 </div>
 </div>
 
-<script>
-function init() {
-  logAttacker('Cyber Range initialized - Ready for attacks');
-  logVictim('Victim system online - Windows Server 2019');
-}
-window.onload = init;
-</script>
+<!-- PREVENTION PAGE -->
+<div id="prevention" class="page">
+<div class="prevention-container">
+<h2>🛡️ ATTACK PREVENTION</h2>
+<div class="prevention-grid">
+<div class="prev-card" data-attack="nmap">
+<h4>🔍 NMAP SCAN</h4>
+<div>• Network segmentation</div>
+<div>• IDS/IPS rules</div>
+<div>• Honeypot deployment</div>
+</div>
+<div class="prev-card" data-attack="phish">
+<h4>📧 PHISHING</h4>
+<div>• Email filtering</div>
+<div>• User awareness training</div>
+<div>• MFA everywhere</div>
+</div>
+<div class="prev-card" data-attack="exploit">
+<h4>💉 RCE EXPLOIT</h4>
+<div>• Patch management</div>
+<div>• WAF deployment</div>
+<div>• Least privilege</div>
+</div>
+<div class="prev-card" data-attack="ransom">
+<h4>💀 RANSOMWARE</h4>
+<div>• 3-2-1 backups</div>
+<div>• Immutable storage</div>
+<div>• Endpoint protection</div>
+</div>
+<div class="prev-card" data-attack="ddos">
+<h4>🌪️ DDOS</h4>
+<div>• Cloudflare CDN</div>
+<div>• Rate limiting</div>
+<div>• Anycast network</div>
+</div>
+</div>
+</div>
+</div>
+
 <script src="script.js"></script>
 </body>
 </html>
